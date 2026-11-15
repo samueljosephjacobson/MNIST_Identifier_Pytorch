@@ -17,3 +17,12 @@ train_loader = DataLoader(train_dataset, batch_size=100, shuffle=True)
 val_loader = DataLoader(val_dataset, batch_size=100, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=100, shuffle=False)
 
+# Neural Network Model
+model = nn.Sequential(
+    nn.Flatten(),
+    nn.Linear(784, 16),
+    nn.ReLU(),
+    nn.Linear(16, 16),
+    nn.ReLU(),
+    nn.Linear(16, 10)
+)
