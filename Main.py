@@ -26,3 +26,7 @@ model = nn.Sequential(
     nn.ReLU(),
     nn.Linear(16, 10)
 )
+
+# loss function and optimizer
+criterion = CrossEntropyLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.001, momentum = 0.85)
