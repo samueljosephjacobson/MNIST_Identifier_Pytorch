@@ -10,6 +10,10 @@ from torchvision import datasets, transforms
 # Datasets for Training, Validation, and Testing.
 fulltrain_dataset = datasets.MNIST("data", train=True, download=True, transform=transforms.ToTensor())
 test_dataset = datasets.MNIST('data', train=False, download=True, transform=transforms.ToTensor())
-train_dataset, val_dataset = random_split(fulltrain_dataset, [50000, 10000])
+train_dataset, val_dataset = random_split(fulltrain_dataset, [50000, 10000], generator=torch.Generator().manual_seed(20))
 
-print(test_dataset[0][0].shape)
+#Dataloaders for Training, Validation, and Testing.
+train_loader = DataLoader(train_dataset, batch_size=100, shuffle=True)
+val_loader = DataLoader(val_dataset, batch_size=100, shuffle=False)
+test_loader = DataLoader(test_dataset, batch_size=100, shuffle=False)
+
