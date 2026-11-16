@@ -6,13 +6,14 @@ from torch.nn import CrossEntropyLoss
 from torch.utils.data import DataLoader, random_split
 import torch.optim as optim
 from torchvision import datasets, transforms
+import torchmetrics
 
 
 
 OVERFITTEST = False
 num_epochs = 10
 learning_rate = 0.01
-moment = 0.9
+momentum_set = 0.9
 
 
 # Datasets for Training, Validation, and Testing.
@@ -38,7 +39,7 @@ model = nn.Sequential(
 
 # loss function and optimizer
 criterion = CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum = moment)
+optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum = momentum_set)
 
 # Overfit Test
 if (OVERFITTEST == True):
@@ -58,8 +59,10 @@ if (OVERFITTEST == True):
 epoch = 0
 train_loss_list = []
 val_loss_list = []
+metric = torchmetrics.Accuracy(task='multiclass', num_classes=10)
+
 for epoch in range(num_epochs):
-    epoch += 1
+    epoch = epoch + 1
     # Training Loop
     model.train()
     training_loss = 0.0
@@ -82,11 +85,12 @@ for epoch in range(num_epochs):
             output = model(images)
             loss = criterion(output, labels)
             validation_loss += loss.item()
-
+            metric.update(output, labels)
     val_loss = validation_loss / len(val_loader)
     val_loss_list.append(val_loss)
+    val_accuracy = metric.compute()
 
-    print(f"epoch: {epoch}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}")
+    print(f"epoch: {epoch}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}, val_accuracy: {val_accuracy:.4f}")
 
 #Graphing the training and validation loss
 epochs = range(1, num_epochs + 1)
