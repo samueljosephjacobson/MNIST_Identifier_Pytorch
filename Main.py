@@ -9,8 +9,10 @@ from torchvision import datasets, transforms
 import torchmetrics
 
 
-
+#Overfitting to a single batch of data to check if model is working properly.
 OVERFITTEST = False
+
+# Hyperparmeters
 num_epochs = 10
 learning_rate = 0.01
 momentum_set = 0.9
