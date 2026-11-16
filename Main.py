@@ -89,6 +89,7 @@ for epoch in range(num_epochs):
     val_loss = validation_loss / len(val_loader)
     val_loss_list.append(val_loss)
     val_accuracy = metric.compute()
+    metric.reset()
 
     print(f"epoch: {epoch}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}, val_accuracy: {val_accuracy:.4f}")
 
