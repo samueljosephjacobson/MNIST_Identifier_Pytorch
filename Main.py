@@ -93,6 +93,16 @@ for epoch in range(num_epochs):
 
     print(f"epoch: {epoch}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}, val_accuracy: {val_accuracy:.4f}")
 
+#Calculating the test accuracy
+model.eval()
+for images, labels in test_loader:
+    outputs = model(images)
+    metric.update(outputs, labels)
+test_accuracy = metric.compute()
+metric.reset()
+
+print(f"Test Accuracy: {test_accuracy:.4f}")
+
 #Graphing the training and validation loss
 epochs = range(1, num_epochs + 1)
 
