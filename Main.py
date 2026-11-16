@@ -58,13 +58,13 @@ if (OVERFITTEST == True):
 
 # Training the model.
 
-epoch = 0
+epoch_count = 0
 train_loss_list = []
 val_loss_list = []
 metric = torchmetrics.Accuracy(task='multiclass', num_classes=10)
 
 for epoch in range(num_epochs):
-    epoch = epoch + 1
+    epoch_count = epoch_count + 1
     # Training Loop
     model.train()
     training_loss = 0.0
@@ -93,7 +93,7 @@ for epoch in range(num_epochs):
     val_accuracy = metric.compute()
     metric.reset()
 
-    print(f"epoch: {epoch}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}, val_accuracy: {val_accuracy:.4f}")
+    print(f"epoch: {epoch_count}, train_loss: {train_loss:.4f}, val_loss: {val_loss:.4f}, val_accuracy: {val_accuracy:.4f}")
 
 #Calculating the test accuracy
 model.eval()
