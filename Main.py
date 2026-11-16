@@ -7,6 +7,12 @@ from torch.utils.data import DataLoader, random_split
 import torch.optim as optim
 from torchvision import datasets, transforms
 
+
+
+OVERFITTEST = False
+
+
+
 # Datasets for Training, Validation, and Testing.
 fulltrain_dataset = datasets.MNIST("data", train=True, download=True, transform=transforms.ToTensor())
 test_dataset = datasets.MNIST('data', train=False, download=True, transform=transforms.ToTensor())
@@ -30,4 +36,19 @@ model = nn.Sequential(
 
 # loss function and optimizer
 criterion = CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.001, momentum = 0.85)
+optimizer = optim.SGD(model.parameters(), lr=0.01, momentum = 0.85)
+
+if (OVERFITTEST == True):
+    image, label = next(iter(train_loader))
+    for epoch in range(500):
+        model.train()
+        output = model(image)
+        loss = criterion(output, label)
+        loss.backward()
+        optimizer.step()
+        optimizer.zero_grad()
+        if (epoch % 50 == 0):
+            print(loss.item())
+
+# Training the model
+num_epochs = 5
