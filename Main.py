@@ -95,11 +95,12 @@ for epoch in range(num_epochs):
 
 #Calculating the test accuracy
 model.eval()
-for images, labels in test_loader:
-    outputs = model(images)
-    metric.update(outputs, labels)
-test_accuracy = metric.compute()
-metric.reset()
+with torch.no_grad():
+    for images, labels in test_loader:
+        outputs = model(images)
+        metric.update(outputs, labels)
+    test_accuracy = metric.compute()
+    metric.reset()
 
 print(f"Test Accuracy: {test_accuracy:.4f}")
 
