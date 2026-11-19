@@ -55,7 +55,7 @@ if (OVERFITTEST == True):
         optimizer.zero_grad()
         if (epoch % 50 == 0):
             print(loss.item())
-
+    raise SystemExit("Overfit Test Complete.")
 # Training the model.
 
 epoch_count = 0
